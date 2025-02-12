@@ -1,48 +1,33 @@
 <template>
-  <div>
-    <!-- Image d'affiche -->
-    <div class="image-container">
-      <img src="/public/image.webp" alt="Movie Poster" class="poster-img" />
+  <div class="flex flex-col items-center justify-center min-h-screen text-center p-4 text-white" >
+    <h1 class="text-4xl font-bold">Bienvenue dans notre app de streaming</h1>
+    <div class="image-container my-4">
+      <img src="/public/image.webp" alt="Movie Poster" class="poster-img w-64 h-auto rounded-lg shadow-lg" />
+    </div>
+    <p class="text-lg text-gray-600">Bon visionage </p>
+
+    <div class="my-4 w-full max-w-md">
+      <input type="text" placeholder="Search for movies..." class="w-full p-2 border rounded-md shadow-sm focus:outline-none text-white"/>
     </div>
 
-    <!-- Titre principal -->
-    <h1>Welcome to the Streaming App</h1>
-
-    <!-- Description -->
-    <p>Enjoy our awesome content, movies, and shows.</p>
-
-    <!-- Barre de recherche -->
-    <div>
-      <input 
-        v-model="searchQuery" 
-        type="text" 
-        placeholder="Search for movies..." 
-        @keyup="searchMovies"
-        class="search-bar"
-      />
+    <div class="flex space-x-4 my-4">
+      <button class="px-4 py-2 bg-zinc-700 text-white rounded-lg shadow-md hover:bg-blue-600 transition">
+        Explore Movies
+      </button>
+      <button class="px-4 py-2 bg-zinc-700 text-white rounded-lg shadow-md hover:bg-gray-600 transition">
+        Login
+      </button>
+      <a href="#" class="px-4 py-2 bg-zinc-700 text-white rounded-lg shadow-md hover:bg-green-600 transition">
+        Sign up
+      </a>
     </div>
 
-    <!-- Affichage des résultats de la recherche -->
-    <div v-if="movies.length">
-      <h2>Search Results</h2>
-      <ul>
-        <li v-for="movie in movies" :key="movie.id">{{ movie.title }}</li>
-      </ul>
-    </div>
-
-    <!-- Boutons de navigation -->
-    <div>
-      <button @click="goToMoviesList">Explore Movies</button>
-      <button @click="goToLogin">Login</button>
-      <router-link to="/register">Sign up</router-link>
-    </div>
-
-    <p>Your favorite movies, all in one place!</p>
+    <p class="text-lg text-gray-600">Your favorite movies, all in one place!</p>
   </div>
 </template>
 
 <script>
-export default {
+/*export default {
   name: 'Home',
   data() {
     return {
@@ -79,5 +64,5 @@ export default {
       );
     },
   },
-};
+};*/
 </script>
