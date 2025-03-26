@@ -1,8 +1,7 @@
 <template>
   <div class="bg-black text-white min-h-screen px-6 relative">
     <!-- Effet de souris -->
-    <div class="cursor-follow"></div>
-
+    <!-- Supprimé l'élément cursor-follow -->
     <!-- Barre de recherche avec logo -->
     <div class="flex items-center justify-center py-6">
       <div class="relative w-full max-w-md">
@@ -88,17 +87,6 @@ export default {
       this.selectedCategory = category;
     },
   },
-  mounted() {
-    // Effet de souris
-    const cursor = document.createElement("div");
-    cursor.classList.add("cursor-follow");
-    document.body.appendChild(cursor);
-
-    document.addEventListener("mousemove", (e) => {
-      cursor.style.left = `${e.clientX}px`;
-      cursor.style.top = `${e.clientY}px`;
-    });
-  },
 };
 </script>
 
@@ -114,30 +102,5 @@ button {
   transition: all 0.3s ease;
 }
 
-/* Effet de souris */
-.cursor-follow {
-  position: fixed;
-  width: 20px;
-  height: 20px;
-  background-color: rgba(255, 0, 0, 0.7);
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 50;
-  transform: translate(-50%, -50%);
-  transition: transform 0.1s ease;
-}
-
-/* Animation des images */
-a img {
-  transition: transform 0.3s ease, brightness 0.3s ease;
-}
-
-a:hover img {
-  transform: scale(1.05);
-  brightness: 0.75;
-}
-
-a:hover p {
-  color: #ef4444; /* Rouge */
-}
+/* Supprimé le style de cursor-follow */
 </style>
