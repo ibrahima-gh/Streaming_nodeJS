@@ -1,7 +1,5 @@
 <template>
-  <div class="bg-black text-white min-h-screen px-6 relative">
-    <!-- Effet de souris -->
-    <!-- Supprimé l'élément cursor-follow -->
+  <div class="text-white min-h-screen px-6 relative">
     <!-- Barre de recherche avec logo -->
     <div class="flex items-center justify-center py-6">
       <div class="relative w-full max-w-md">
@@ -48,21 +46,6 @@
         <p class="text-sm mt-2 text-center group-hover:text-red-500 transition">{{ item.title }}</p>
       </router-link>
     </div>
-
-    <!-- Modal pour les détails -->
-    <div v-if="selectedMovie" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50">
-      <div class="bg-gray-800 p-6 rounded-lg shadow-lg max-w-md w-full">
-        <h2 class="text-2xl font-bold mb-4">{{ selectedMovie.title }}</h2>
-        <img :src="selectedMovie.image" alt="Affiche" class="w-full rounded-lg mb-4" />
-        <p class="text-gray-300">Description du film ou série...</p>
-        <button
-          @click="closeDetails"
-          class="mt-4 bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition"
-        >
-          Fermer
-        </button>
-      </div>
-    </div>
   </div>
 </template>
 
@@ -72,7 +55,6 @@ export default {
     return {
       searchQuery: "",
       selectedCategory: "Tous",
-      selectedMovie: null, // Film ou série sélectionné(e)
       categories: ["Tous", "Films", "Séries"],
       items: [
         { id: "1", title: "Inception", image: "/public/téléchargement.jpg", category: "Films" },
@@ -101,12 +83,6 @@ export default {
   methods: {
     filterCategory(category) {
       this.selectedCategory = category;
-    },
-    showDetails(item) {
-      this.selectedMovie = item;
-    },
-    closeDetails() {
-      this.selectedMovie = null;
     },
   },
 };

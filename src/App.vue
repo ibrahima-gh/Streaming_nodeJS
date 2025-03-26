@@ -1,14 +1,20 @@
 <template>
   <div>
-    <header class="bg-black text-white p-4 flex justify-between items-center">
-      <h1 class="text-2xl font-bold cursor-pointer hover:text-red-500 transition" @click="$router.push('/')">🎥 Streaming App</h1>
-      <nav class="flex space-x-4">
-        <router-link to="/" class="text-sm hover:text-red-500 transition">Accueil</router-link>
-        <router-link to="/catalogue" class="text-sm hover:text-red-500 transition">Catalogue</router-link>
-        <router-link to="/account" class="text-sm hover:text-red-500 transition">Mon Compte</router-link>
-        <router-link to="/login" v-if="!user" class="text-sm hover:text-red-500 transition">Se connecter</router-link>
-        <router-link to="/register" v-if="!user" class="text-sm hover:text-red-500 transition">S'inscrire</router-link>
-        <button v-if="user" @click="logout" class="text-sm bg-red-600 px-3 py-1 rounded-lg hover:bg-red-700 transition">
+    <header class="bg-gray-800 text-white p-4 flex flex-col md:flex-row md:justify-between items-center">
+      <h1 class="text-3xl font-bold cursor-pointer hover:text-red-500 transition mb-4 md:mb-0" @click="$router.push('/')">
+        🎥 Streaming App
+      </h1>
+      <nav class="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-8 items-center">
+        <router-link to="/" class="text-lg hover:text-red-500 transition">Accueil</router-link>
+        <router-link to="/catalogue" class="text-lg hover:text-red-500 transition">Catalogue</router-link>
+        <router-link to="/account" class="text-lg hover:text-red-500 transition">Mon Compte</router-link>
+        <router-link to="/login" v-if="!user" class="text-lg hover:text-red-500 transition">Se connecter</router-link>
+        <router-link to="/register" v-if="!user" class="text-lg hover:text-red-500 transition">S'inscrire</router-link>
+        <button
+          v-if="user"
+          @click="logout"
+          class="text-lg bg-red-600 px-4 py-2 rounded-lg hover:bg-red-700 transition"
+        >
           Déconnexion
         </button>
       </nav>
