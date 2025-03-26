@@ -49,10 +49,11 @@ export default {
   methods: {
     handleLogin() {
       if (this.email && this.password) {
-        const user = { username: this.email.split("@")[0] }; // Utilise la partie avant "@" comme nom d'utilisateur
+        const user = { username: this.email.split("@")[0] };
         localStorage.setItem("user", JSON.stringify(user));
+        this.$emit("user-updated", user); // Émet un événement pour mettre à jour l'utilisateur
         alert("Connexion réussie !");
-        this.$router.push("/"); // Redirige vers la page d'accueil
+        this.$router.push("/");
       } else {
         alert("Veuillez remplir tous les champs.");
       }
@@ -60,10 +61,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-/* Ajout de styles pour la page de connexion */
-button {
-  transition: all 0.3s ease;
-}
-</style>

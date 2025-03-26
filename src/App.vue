@@ -1,13 +1,19 @@
 <template>
   <div>
     <header class="bg-black text-white p-4 flex justify-between items-center">
-      <h1 class="text-2xl font-bold">🎥 Streaming App</h1>
-      <div v-if="user" class="flex items-center space-x-4">
-        <p class="text-sm">Bienvenue, {{ user.username }}</p>
-        <img src="/account-icon.png" alt="Compte" class="w-8 h-8 rounded-full" />
-      </div>
+      <h1 class="text-2xl font-bold cursor-pointer hover:text-red-500 transition" @click="$router.push('/')">🎥 Streaming App</h1>
+      <nav class="flex space-x-4">
+        <router-link to="/" class="text-sm hover:text-red-500 transition">Accueil</router-link>
+        <router-link to="/catalogue" class="text-sm hover:text-red-500 transition">Catalogue</router-link>
+        <router-link to="/account" class="text-sm hover:text-red-500 transition">Mon Compte</router-link>
+        <router-link to="/login" v-if="!user" class="text-sm hover:text-red-500 transition">Se connecter</router-link>
+        <router-link to="/register" v-if="!user" class="text-sm hover:text-red-500 transition">S'inscrire</router-link>
+        <button v-if="user" @click="logout" class="text-sm bg-red-600 px-3 py-1 rounded-lg hover:bg-red-700 transition">
+          Déconnexion
+        </button>
+      </nav>
     </header>
-    <router-view />
+    <router-view @user-updated="updateUser" />
   </div>
 </template>
 
@@ -24,6 +30,16 @@ export default {
     if (storedUser) {
       this.user = JSON.parse(storedUser);
     }
+  },
+  methods: {
+    updateUser(user) {
+      this.user = user;
+    },
+    logout() {
+      localStorage.removeItem("user");
+      this.user = null;
+      this.$router.push("/login");
+    },
   },
 };
 </script>
