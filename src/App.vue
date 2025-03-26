@@ -1,10 +1,12 @@
 <template>
   <div>
-    <header class="bg-gray-800 text-white p-4 flex flex-col md:flex-row md:justify-between items-center">
-      <h1 class="text-3xl font-bold cursor-pointer hover:text-red-500 transition mb-4 md:mb-0" @click="$router.push('/')">
-        🎥 Streaming App
-      </h1>
-      <nav class="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-8 items-center">
+    <header class="bg-gray-800 text-white p-4 flex flex-col md:flex-row items-center">
+      <div class="flex-1 flex items-center">
+        <h1 class="text-3xl font-bold cursor-pointer hover:text-red-500 transition" @click="$router.push('/')">
+          🎥 Streaming App
+        </h1>
+      </div>
+      <nav class="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-4 items-center justify-center flex-1">
         <router-link to="/" class="text-lg hover:text-red-500 transition">Accueil</router-link>
         <router-link to="/catalogue" class="text-lg hover:text-red-500 transition">Catalogue</router-link>
         <router-link to="/account" class="text-lg hover:text-red-500 transition">Mon Compte</router-link>
