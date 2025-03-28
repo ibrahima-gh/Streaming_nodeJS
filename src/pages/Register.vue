@@ -1,8 +1,8 @@
 <template>
   <div class="min-h-screen flex items-center justify-center">
-    <div class="w-full max-w-md bg-gray-800 p-8 rounded-lg shadow-lg">
-      <h1 class="text-4xl font-extrabold text-center text-red-500 mb-6">Inscription</h1>
-      <form @submit.prevent="handleRegister" class="space-y-6">
+    <div class="w-full max-w-lg bg-zinc-800 p-10 rounded-4xl shadow-lg">
+      <h1 class="text-4xl font-extrabold text-center text-red-500 mb-10">Inscription</h1>
+      <form @submit.prevent="handleRegister" class="flex flex-col gap-8">
         <div>
           <label for="username" class="block text-sm font-medium text-gray-300 mb-2">Nom d'utilisateur</label>
           <input
@@ -10,8 +10,9 @@
             type="text"
             id="username"
             placeholder="Entrez votre nom d'utilisateur"
-            class="w-full p-3 border border-gray-600 rounded-md bg-gray-900 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 transition"
-          />
+            class="w-full p-5 border-2 rounded-3xl  text-white border-zinc-600 placeholder-white/50 text-white focus:outline-none focus:ring focus:ring-red-500 focus:border-red-500"
+            required
+            />
         </div>
         <div>
           <label for="email" class="block text-sm font-medium text-gray-300 mb-2">Adresse e-mail</label>
@@ -20,8 +21,9 @@
             type="email"
             id="email"
             placeholder="Entrez votre e-mail"
-            class="w-full p-3 border border-gray-600 rounded-md bg-gray-900 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 transition"
-          />
+            class="w-full p-5 border-2 rounded-3xl  text-white border-zinc-600 placeholder-white/50 text-white focus:outline-none focus:ring focus:ring-red-500 focus:border-red-500"
+            required
+            />
         </div>
         <div>
           <label for="password" class="block text-sm font-medium text-gray-300 mb-2">Mot de passe</label>
@@ -30,12 +32,13 @@
             type="password"
             id="password"
             placeholder="Entrez votre mot de passe"
-            class="w-full p-3 border border-gray-600 rounded-md bg-gray-900 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 transition"
-          />
+            class="w-full p-5 border-2 rounded-3xl  text-white border-zinc-600 placeholder-white/50 text-white focus:outline-none focus:ring focus:ring-red-500 focus:border-red-500"
+            required
+            />
         </div>
         <button
           type="submit"
-          class="w-full py-3 bg-red-600 text-white font-semibold rounded-lg shadow-md hover:bg-red-700 transition"
+          class="w-full py-5 bg-red-600 text-white font-semibold rounded-3xl shadow-md hover:bg-red-700 transition"
         >
           S'inscrire
         </button>
