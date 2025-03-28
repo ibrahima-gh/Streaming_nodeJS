@@ -37,6 +37,8 @@ export default {
       { id: "7", title: "Breaking Bad", description: "Un professeur de chimie devient criminel.", image: "/public/breakingbad.jpg", category: "Séries", duration: "5 saisons" },
       { id: "8", title: "Game of Thrones", description: "Une lutte pour le trône de fer.", image: "/public/got.jpg", category: "Séries", duration: "8 saisons" },
       { id: "9", title: "Stranger Things", description: "Des enfants découvrent un monde parallèle.", image: "/public/strangerthings.jpg", category: "Séries", duration: "4 saisons" },
+      { id: "10", title: "Deadpool", description: "Un anti-héros hilarant.", image: "/public/deadpool.jpg", category: "Films", duration: "1h 48m" },
+      { id: "11", title: "The Hangover", description: "Une nuit inoubliable à Vegas.", image: "/public/hangover.jpg", category: "Films", duration: "1h 40m" },
     ];
 
     this.movie = movies.find((movie) => movie.id === this.id);

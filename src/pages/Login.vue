@@ -1,26 +1,28 @@
 <template>
-  <div class="bg-gradient-to-b from-black via-gray-900 to-black min-h-screen flex items-center justify-center">
-    <div class="w-full max-w-md bg-gray-800 p-8 rounded-lg shadow-lg">
+  <div :class="theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-gray-100 text-gray-900'" class="min-h-screen flex items-center justify-center">
+    <div class="w-full max-w-md bg-gray-800 p-8 rounded-lg shadow-lg" :class="theme === 'dark' ? 'bg-gray-800' : 'bg-white'">
       <h1 class="text-4xl font-extrabold text-center text-red-500 mb-6">🔐 Connexion</h1>
       <form @submit.prevent="handleLogin" class="space-y-6">
         <div>
-          <label for="email" class="block text-sm font-medium text-gray-300 mb-2">Adresse e-mail</label>
+          <label for="email" class="block text-sm font-medium mb-2">Adresse e-mail</label>
           <input
             v-model="email"
             type="email"
             id="email"
             placeholder="Entrez votre e-mail"
-            class="w-full p-3 border border-gray-600 rounded-md bg-gray-900 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 transition"
+            class="w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
+            :class="theme === 'dark' ? 'bg-gray-700 text-white' : 'bg-gray-100 text-gray-900'"
           />
         </div>
         <div>
-          <label for="password" class="block text-sm font-medium text-gray-300 mb-2">Mot de passe</label>
+          <label for="password" class="block text-sm font-medium mb-2">Mot de passe</label>
           <input
             v-model="password"
             type="password"
             id="password"
             placeholder="Entrez votre mot de passe"
-            class="w-full p-3 border border-gray-600 rounded-md bg-gray-900 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 transition"
+            class="w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
+            :class="theme === 'dark' ? 'bg-gray-700 text-white' : 'bg-gray-100 text-gray-900'"
           />
         </div>
         <button
@@ -30,9 +32,9 @@
           Se connecter
         </button>
       </form>
-      <p class="text-center text-gray-400 mt-6">
+      <p class="text-center mt-6">
         Pas encore de compte ?
-        <router-link to="/register" class="text-red-500 hover:underline hover:text-red-400 transition">Inscrivez-vous</router-link>
+        <router-link to="/register" class="text-red-500 hover:underline">Inscrivez-vous</router-link>
       </p>
     </div>
   </div>
@@ -44,16 +46,13 @@ export default {
     return {
       email: "",
       password: "",
+      theme: localStorage.getItem("theme") || "dark",
     };
   },
   methods: {
     handleLogin() {
       if (this.email && this.password) {
-        const user = { username: this.email.split("@")[0] };
-        localStorage.setItem("user", JSON.stringify(user));
-        this.$emit("user-updated", user); // Émet un événement pour mettre à jour l'utilisateur
         alert("Connexion réussie !");
-        this.$router.push("/");
       } else {
         alert("Veuillez remplir tous les champs.");
       }
@@ -63,8 +62,12 @@ export default {
 </script>
 
 <style scoped>
-/* Suppression des animations excessives pour un design plus stable */
+/* Modernisation des styles */
 button {
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  transform: scale(1.05);
 }
 </style>

@@ -1,28 +1,28 @@
 <template>
-  <div :class="theme === 'dark' ? 'bg-black text-white' : 'bg-white text-black'" class="min-h-screen">
-    <!-- Bouton de bascule mode clair/sombre -->
+  <div :class="theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-gray-100 text-gray-900'" class="min-h-screen">
+    <!-- Bouton Dark Mode -->
     <div class="absolute top-4 right-4">
       <button
         @click="toggleTheme"
-        class="p-2 rounded-full shadow-md"
-        :class="theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-gray-200 text-black'"
+        class="p-3 rounded-full shadow-md focus:outline-none transition-transform transform hover:scale-110"
+        :class="theme === 'dark' ? 'bg-gray-800 text-yellow-400' : 'bg-yellow-400 text-gray-800'"
       >
-        <span v-if="theme === 'dark'" class="material-icons">🌞</span>
-        <span v-else class="material-icons">🌙</span>
+        <span v-if="theme === 'dark'">🌞</span>
+        <span v-else>🌙</span>
       </button>
     </div>
 
-    <!-- Section Hero (Film en vedette) -->
+    <!-- Section Hero -->
     <div class="relative w-full h-[500px]">
       <img
         src="/public/image.webp"
         alt="Film en vedette"
-        class="w-full h-full object-cover brightness-70"
+        class="w-full h-full object-cover brightness-75"
       />
       <div class="absolute inset-0 flex flex-col justify-center px-10">
         <h1 class="text-5xl font-bold">🔥 Film en Vedette</h1>
         <p class="text-lg mt-2 max-w-xl" :class="theme === 'dark' ? 'text-gray-300' : 'text-gray-700'">
-          Un film incroyable à ne pas manquer. Regardez-le dès maintenant !
+          Découvrez les meilleurs films et séries à regarder dès maintenant !
         </p>
         <div class="mt-4 flex space-x-4">
           <button
@@ -45,12 +45,16 @@
       />
     </div>
 
-    <!-- Section Catalogues -->
+    <!-- Section Films -->
     <div class="mt-8 px-6">
       <h2 class="text-2xl font-semibold mb-4">🔥 Films les plus regardés</h2>
-      <div class="flex space-x-4 overflow-x-auto scrollbar-hide">
-        <div v-for="movie in topMovies" :key="movie.id" class="relative group w-40">
-          <img :src="movie.image" :alt="movie.title" class="w-full rounded-lg shadow-lg transition-transform duration-300 group-hover:scale-105" />
+      <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
+        <div v-for="movie in topMovies" :key="movie.id" class="relative group">
+          <img
+            :src="movie.image"
+            :alt="movie.title"
+            class="w-full h-48 object-contain rounded-lg shadow-lg transition-transform duration-300 group-hover:scale-105"
+          />
           <p class="text-sm mt-2 text-center group-hover:text-red-500 transition">{{ movie.title }}</p>
         </div>
       </div>
@@ -106,7 +110,7 @@
 export default {
   data() {
     return {
-      theme: "dark",
+      theme: localStorage.getItem("theme") || "dark",
       showTrailer: false,
       topMovies: [
         { id: 1, title: "Inception", image: "/public/téléchargement.jpg" },
@@ -127,6 +131,7 @@ export default {
   methods: {
     toggleTheme() {
       this.theme = this.theme === "dark" ? "light" : "dark";
+      localStorage.setItem("theme", this.theme);
     },
     playTrailer() {
       this.showTrailer = true;
@@ -189,5 +194,23 @@ input[type="text"] {
 .modal-enter-from,
 .modal-leave-to {
   opacity: 0;
+}
+
+/* Modernisation des styles */
+button {
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  transform: scale(1.1);
+}
+
+img {
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.group:hover img {
+  transform: scale(1.1);
+  opacity: 0.9;
 }
 </style>
