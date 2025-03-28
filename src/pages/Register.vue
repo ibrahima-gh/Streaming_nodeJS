@@ -1,7 +1,7 @@
 <template>
-  <div class="bg-gradient-to-b from-black via-gray-900 to-black min-h-screen flex items-center justify-center">
+  <div class="min-h-screen flex items-center justify-center">
     <div class="w-full max-w-md bg-gray-800 p-8 rounded-lg shadow-lg">
-      <h1 class="text-4xl font-extrabold text-center text-red-500 mb-6">📝 Inscription</h1>
+      <h1 class="text-4xl font-extrabold text-center text-red-500 mb-6">Inscription</h1>
       <form @submit.prevent="handleRegister" class="space-y-6">
         <div>
           <label for="username" class="block text-sm font-medium text-gray-300 mb-2">Nom d'utilisateur</label>
@@ -71,10 +71,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-/* Suppression des animations excessives pour un design plus stable */
-button {
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
-}
-</style>

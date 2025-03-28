@@ -1,26 +1,13 @@
 <template>
-  <div :class="theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-gray-100 text-gray-900'" class="min-h-screen px-6 relative">
-    <!-- Bouton Dark Mode -->
-    <div class="absolute top-4 right-4 z-50">
-      <button
-        @click="toggleTheme"
-        class="p-3 rounded-full shadow-md focus:outline-none transition-transform transform hover:scale-110"
-        :class="theme === 'dark' ? 'bg-gray-800 text-yellow-400' : 'bg-yellow-400 text-gray-800'"
-      >
-        <span v-if="theme === 'dark'">🌞</span>
-        <span v-else>🌙</span>
-      </button>
-    </div>
-
+  <div class="text-white px-6 relative">
     <!-- Barre de recherche avec logo -->
-    <div class="flex items-center justify-center py-6 relative z-20">
+    <div class="flex items-center justify-center pt-30 relative">
       <div class="relative w-full max-w-lg">
-        <img src="/popcorn.png" alt="Popcorn" class="absolute left-3 top-1/2 transform -translate-y-1/2 w-8 h-8" />
         <input
           v-model="searchQuery"
           type="text"
           placeholder="Rechercher un film ou une série..."
-          class="w-full p-4 pl-14 border rounded-full shadow-md bg-transparent placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-500 transition-transform transform hover:scale-105"
+          class="w-full p-5 px-10 border-2 rounded-full bg-transparent placeholder-gray-400"
           :class="theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-white text-gray-900'"
         />
         <!-- Suggestions dynamiques -->
