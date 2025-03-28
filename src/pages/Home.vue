@@ -1,6 +1,5 @@
 <template>
-  <div class="min-h-screen">
-
+  <div class="min-h-screen bg-gray-900 text-white">
     <!-- Section Hero -->
     <div class="relative w-full h-[75vh]">
       <img
@@ -9,18 +8,20 @@
         class="w-full h-full object-cover brightness-50"
       />
       <div class="absolute inset-0 flex flex-col justify-center ml-10 gap-5">
-        <h1 class="text-5xl text-white font-bold">🔥 Film en Vedette</h1>
+        <h1 class="text-5xl font-bold">🔥 Film en Vedette</h1>
         <p class="text-xl text-white/75">
-          Découvrez les meilleurs films et séries à regarder dès maintenant !
+          Découvrez les meilleurs films , séries , anime ,à regarder dès maintenant !
         </p>
         <div class="mt-4 flex space-x-4">
           <button
-            @click="playTrailer"
+            @click="openTrailer"
             class="px-5 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition"
           >
-            ▶ Catalogue
+            ▶ Bande annonce
           </button>
-          <button class="px-5 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-800 transition">ℹ️ Plus d'infos</button>
+          <button class="px-5 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-800 transition">
+            ℹ️ Plus d'infos
+          </button>
         </div>
       </div>
     </div>
@@ -29,42 +30,73 @@
     <div class="flex justify-center mt-6">
       <input
         type="text"
-        placeholder="Rechercher un film..."
-        class="w-full max-w-md p-5 border rounded-3xl border-2 border-gray-500 placeholder-white/70 text-white"
+        placeholder="Rechercher un film ou une série..."
+        class="w-full max-w-md p-5 border rounded-3xl border-2 border-gray-500 placeholder-white/70 text-white bg-gray-800"
       />
     </div>
 
-    <!-- Section Films -->
+    <!-- Section Films recommandés -->
     <div class="mt-8 px-6">
-      <h2 class="text-white text-2xl font-semibold mb-4">🔥 Films les plus regardés</h2>
+      <h2 class="text-2xl font-semibold mb-4">🎥 Films recommandés</h2>
       <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
-        <div v-for="movie in topMovies" :key="movie.id" class="relative group">
+        <div v-for="movie in recommendedMovies" :key="movie.id" class="relative group">
           <img
             :src="movie.image"
             :alt="movie.title"
             class="w-full h-48 object-contain rounded-lg shadow-lg transition-transform duration-300 group-hover:scale-105"
           />
           <p class="text-sm mt-2 text-center group-hover:text-red-500 transition">{{ movie.title }}</p>
+          <div class="flex justify-center mt-2">
+            <span class="text-yellow-400 text-lg">⭐ {{ movie.rating }}/5</span>
+          </div>
         </div>
       </div>
     </div>
 
+ 
+  
+
+  
+
+    <!-- Section Animés -->
     <div class="mt-8 px-6">
-      <h2 class="text-white text-2xl font-semibold mb-4">🚀 Tendances</h2>
-      <div class="flex space-x-4 overflow-x-auto scrollbar-hide">
-        <div v-for="movie in trendingMovies" :key="movie.id" class="relative group w-40">
-          <img :src="movie.image" :alt="movie.title" class="w-full rounded-lg shadow-lg transition-transform duration-300 group-hover:scale-105" />
-          <p class="text-sm mt-2 text-center group-hover:text-red-500 transition">{{ movie.title }}</p>
+      <h2 class="text-2xl font-semibold mb-4">🎌 Animés</h2>
+      <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
+        <div v-for="anime in animes" :key="anime.id" class="relative group">
+          <img
+            :src="anime.image"
+            :alt="anime.title"
+            class="w-full h-48 object-contain rounded-lg shadow-lg transition-transform duration-300 group-hover:scale-105"
+          />
+          <p class="text-sm mt-2 text-center group-hover:text-red-500 transition">{{ anime.title }}</p>
         </div>
       </div>
     </div>
 
-    <!-- Bande-annonce modale -->
-    <div v-if="showTrailer" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50">
+    <!-- Section Dessins animés -->
+    <div class="mt-8 px-6">
+      <h2 class="text-2xl font-semibold mb-4">🎨 Dessins animés</h2>
+      <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
+        <div v-for="cartoon in cartoons" :key="cartoon.id" class="relative group">
+          <img
+            :src="cartoon.image"
+            :alt="cartoon.title"
+            class="w-full h-48 object-contain rounded-lg shadow-lg transition-transform duration-300 group-hover:scale-105"
+          />
+          <p class="text-sm mt-2 text-center group-hover:text-red-500 transition">{{ cartoon.title }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal pour la bande annonce -->
+    <div
+      v-if="showTrailer"
+      class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50"
+    >
       <div class="relative w-full max-w-4xl">
         <iframe
           width="100%"
-          height="315"
+          height="500"
           src="https://www.youtube.com/embed/hgX152xFTk8"
           title="Captain America 4 Trailer"
           frameborder="0"
@@ -83,14 +115,64 @@
 </template>
 
 <script>
-      topMovies: [
-        { id: 1, title: "Inception", image: "/public/téléchargement.jpg" },
-        { id: 2, title: "The Dark Knight", image: "/public/images.jpg" },
-        { id: 3, title: "Interstellar", image: "/public/18949761.jpg" },
-      ];
+export default {
+  data() {
+    return {
+      showTrailer: false,
+      recommendedMovies: [
+        { id: 1, title: "Inception", image: "/public/téléchargement.jpg", rating: 4.8 },
+        { id: 2, title: "The Dark Knight", image: "/public/images.jpg", rating: 4.9 },
+        { id: 3, title: "Interstellar", image: "/public/18949761.jpg", rating: 4.7 },
+      ],
       trendingMovies: [
         { id: 4, title: "Avengers: Endgame", image: "/public/0472053.jpg" },
         { id: 5, title: "Dune", image: "/public/4633954.webp" },
         { id: 6, title: "Spider-Man: No Way Home", image: "/public/4860598.webp" },
-      ]
+      ],
+      
+      animes: [
+        { id: 1, title: "Demon Slayer", image: "/public/demonslayer.webp" },
+        { id: 2, title: "Attack on Titan", image: "/public/snk.webp" },
+        { id: 3, title: "One Piece", image: "/public/op.png" },
+      ],
+      cartoons: [
+        { id: 1, title: "Rick and Morty", image: "/public/rm.jpg" },
+        { id: 2, title: "Adventure Time", image: "/public/adt.webp" },
+        { id: 3, title: "The Simpsons", image: "/public/simpsons.jpg" },
+      ],
+    };
+  },
+  methods: {
+    openTrailer() {
+      this.showTrailer = true;
+    },
+    closeTrailer() {
+      this.showTrailer = false;
+    },
+  },
+};
 </script>
+
+<style scoped>
+/* Modernisation des styles */
+button {
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  transform: scale(1.05);
+}
+
+img {
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.group:hover img {
+  transform: scale(1.1);
+  opacity: 0.9;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+</style>
