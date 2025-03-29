@@ -10,27 +10,30 @@
           class="w-full p-5 px-10 border-2 rounded-full bg-transparent placeholder-gray-400"
           :class="theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-white text-gray-900'"
         />
-        <!-- Suggestions dynamiques -->
-        <ul
-          v-if="searchQuery && filteredItems.length"
-          class="absolute top-full left-0 w-full rounded-lg shadow-lg mt-2 z-30 max-h-64 overflow-y-auto"
-          :class="theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-white text-gray-900'"
+        <!-- Résultats de recherche -->
+        <div
+          v-if="searchQuery && filteredItems.length > 0"
+          class="absolute top-full left-0 w-full bg-gray-800 text-white rounded-lg shadow-lg mt-2 z-50"
         >
-          <li
-            v-for="item in filteredItems"
-            :key="item.id"
-            @click="goToMovie(item.id)"
-            class="flex items-center p-3 cursor-pointer transition"
-            :class="theme === 'dark' ? 'hover:bg-gray-700' : 'hover:bg-gray-200'"
-          >
-            <img
-              :src="item.image"
-              :alt="item.title"
-              class="w-12 h-12 rounded-md mr-3 object-cover"
-            />
-            <span class="text-sm font-medium">{{ item.title }}</span>
-          </li>
-        </ul>
+          <ul>
+            <li
+              v-for="item in filteredItems"
+              :key="item.id"
+              class="flex items-center p-3 hover:bg-gray-700 cursor-pointer"
+              @click="showMovieDetails(item)"
+            >
+              <img
+                :src="item.image"
+                alt="Film"
+                class="w-12 h-12 rounded-lg mr-4 object-cover"
+              />
+              <div>
+                <p class="font-bold">{{ item.title }}</p>
+                <p class="text-sm text-gray-400">"Découvrez ce chef-d'œuvre maintenant !"</p>
+              </div>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
 
@@ -39,15 +42,13 @@
 
     <!-- Section : En tendances -->
     <section class="mb-12">
-      <h2 class="text-2xl font-semibold mb-6 flex items-center">
-        🔥 En tendances
-      </h2>
+      <h2 class="text-2xl font-semibold mb-6 flex items-center">🔥 En tendances</h2>
       <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
-        <router-link
+        <div
           v-for="item in trendingItems"
           :key="item.id"
-          :to="{ path: `/movie/${item.id}` }"
-          class="block group"
+          class="relative group cursor-pointer"
+          @click="showMovieDetails(item)"
         >
           <div class="relative overflow-hidden rounded-lg shadow-lg">
             <img
@@ -59,21 +60,19 @@
               <p class="text-white text-lg font-bold">{{ item.title }}</p>
             </div>
           </div>
-        </router-link>
+        </div>
       </div>
     </section>
 
     <!-- Section : Les plus récents -->
     <section class="mb-12">
-      <h2 class="text-2xl font-semibold mb-6 flex items-center">
-        🆕 Les plus récents
-      </h2>
+      <h2 class="text-2xl font-semibold mb-6 flex items-center">🆕 Les plus récents</h2>
       <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
-        <router-link
+        <div
           v-for="item in recentItems"
           :key="item.id"
-          :to="{ path: `/movie/${item.id}` }"
-          class="block group"
+          class="relative group cursor-pointer"
+          @click="showMovieDetails(item)"
         >
           <div class="relative overflow-hidden rounded-lg shadow-lg">
             <img
@@ -85,7 +84,7 @@
               <p class="text-white text-lg font-bold">{{ item.title }}</p>
             </div>
           </div>
-        </router-link>
+        </div>
       </div>
     </section>
 
@@ -140,6 +139,35 @@
         </router-link>
       </div>
     </section>
+
+    <!-- Modal pour les détails du film -->
+    <div
+      v-if="selectedMovie"
+      class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50"
+    >
+      <div class="bg-gray-800 p-6 rounded-lg shadow-lg w-full max-w-lg relative">
+        <h2 class="text-2xl font-bold mb-4 text-center">{{ selectedMovie.title }}</h2>
+        <img
+          :src="selectedMovie.image"
+          :alt="selectedMovie.title"
+          class="w-full h-64 object-contain rounded-lg shadow-lg mb-4"
+        />
+        <p class="text-gray-300 mb-4">{{ selectedMovie.description }}</p>
+        <div class="mb-4">
+          <h3 class="text-lg font-semibold mb-2">Avis des utilisateurs :</h3>
+          <div class="flex items-center space-x-2">
+            <span class="text-yellow-400 text-lg">⭐ {{ selectedMovie.rating }}/5</span>
+            <p class="text-gray-400">({{ selectedMovie.reviews }} avis)</p>
+          </div>
+        </div>
+        <button
+          @click="closeMovieDetails"
+          class="absolute top-2 right-2 bg-red-600 text-white px-4 py-2 rounded-full hover:bg-red-700 transition"
+        >
+          ✖
+        </button>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -150,17 +178,46 @@ export default {
       searchQuery: "",
       theme: localStorage.getItem("theme") || "dark",
       items: [
-        { id: "1", title: "Inception", image: "/public/téléchargement.jpg", category: "Action", trending: true, recent: true },
-        { id: "2", title: "Interstellar", image: "/public/images.jpg", category: "Action", trending: true },
-        { id: "3", title: "The Dark Knight", image: "/public/18949761.jpg", category: "Super-héros", trending: true },
-        { id: "4", title: "Avengers: Endgame", image: "/public/0472053.jpg", category: "Super-héros", recent: true },
-        { id: "5", title: "Dune", image: "/public/4633954.webp", category: "Action", recent: true },
-        { id: "6", title: "Spider-Man: No Way Home", image: "/public/4860598.webp", category: "Super-héros", trending: true },
-        { id: "7", title: "The Hangover", image: "/public/hangover.jpg", category: "Comédie", recent: true },
-        { id: "8", title: "Game of Thrones", image: "/public/got.jpg", category: "Action" },
-        { id: "9", title: "Stranger Things", image: "/public/strangerthings.jpg", category: "Action", trending: true },
-        { id: "10", title: "Deadpool", image: "/public/deadpool.jpg", category: "Comédie", trending: true },
+        {
+          id: "1",
+          title: "Inception",
+          image: "/public/téléchargement.jpg",
+          description: "Un film incroyable réalisé par Christopher Nolan.",
+          rating: 4.8,
+          reviews: 150,
+          category: "Action",
+          trending: true,
+          recent: true,
+        },
+        {
+          id: "2",
+          title: "Interstellar",
+          image: "/public/images.jpg",
+          description: "Un voyage épique dans l'espace.",
+          rating: 4.7,
+          reviews: 180,
+          category: "Action",
+          trending: true,
+        },
+        {
+          id: "3",
+          title: "The Dark Knight",
+          image: "/public/18949761.jpg",
+          description: "Un film de super-héros avec Batman.",
+          rating: 4.9,
+          reviews: 200,
+          category: "Super-héros",
+          trending: true,
+        },
+        { id: "4", title: "Avengers: Endgame", image: "/public/0472053.jpg", description: "Un combat épique.", rating: 4.6, reviews: 300, category: "Super-héros", recent: true },
+        { id: "5", title: "Dune", image: "/public/4633954.webp", description: "Une aventure sur une planète désertique.", rating: 4.5, reviews: 250, category: "Action", recent: true },
+        { id: "6", title: "Spider-Man: No Way Home", image: "/public/4860598.webp", description: "Un multivers de Spider-Man.", rating: 4.7, reviews: 400, category: "Super-héros", trending: true },
+        { id: "7", title: "The Hangover", image: "/public/hangover.jpg", description: "Une nuit inoubliable à Vegas.", rating: 4.3, reviews: 120, category: "Comédie", recent: true },
+        { id: "8", title: "Game of Thrones", image: "/public/got.jpg", description: "Une lutte pour le trône de fer.", rating: 4.8, reviews: 500, category: "Action" },
+        { id: "9", title: "Stranger Things", image: "/public/strangerthings.jpg", description: "Des enfants découvrent un monde parallèle.", rating: 4.6, reviews: 350, category: "Action", trending: true },
+        { id: "10", title: "Deadpool", image: "/public/deadpool.jpg", description: "Un anti-héros hilarant.", rating: 4.4, reviews: 220, category: "Comédie", trending: true },
       ],
+      selectedMovie: null, // Film sélectionné pour afficher les détails
     };
   },
   computed: {
@@ -190,26 +247,23 @@ export default {
       this.theme = this.theme === "dark" ? "light" : "dark";
       localStorage.setItem("theme", this.theme);
     },
+    showMovieDetails(movie) {
+      this.selectedMovie = movie;
+    },
+    closeMovieDetails() {
+      this.selectedMovie = null;
+    },
   },
 };
 </script>
 
 <style scoped>
-/* Styles modernisés */
-body {
-  font-family: 'Arial', sans-serif;
-}
-
-h1, h2 {
-  font-family: 'Poppins', sans-serif;
-}
-
 button {
   transition: all 0.3s ease;
 }
 
 button:hover {
-  transform: scale(1.1);
+  transform: scale(1.05);
 }
 
 img {
@@ -219,5 +273,11 @@ img {
 .group:hover img {
   transform: scale(1.1);
   opacity: 0.9;
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 </style>
