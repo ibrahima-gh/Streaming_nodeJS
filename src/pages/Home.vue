@@ -3,7 +3,7 @@
     <!-- Section Hero -->
     <div class="relative w-full h-[75vh]">
       <img
-        src="/public/image.webp"
+        src="/public/CaptainAmerica.webp"
         alt="Film en vedette"
         class="w-full h-full object-cover brightness-50"
       />
@@ -48,16 +48,13 @@
           class="relative group"
         >
           <img
-            :src="movie.image"
+            :src="movie.url_image"
             :alt="movie.title"
             class="w-full h-48 object-contain rounded-lg shadow-lg transition-transform duration-300 group-hover:scale-105"
           />
           <p class="text-sm mt-2 text-center group-hover:text-red-500 transition">
             {{ movie.title }}
           </p>
-          <div class="flex justify-center mt-2">
-            <span class="text-yellow-400 text-lg">⭐ {{ movie.rating }}/5</span>
-          </div>
         </div>
       </div>
     </div>
