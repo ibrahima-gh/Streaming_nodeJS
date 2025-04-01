@@ -202,20 +202,20 @@ export default {
         {
           id: "3",
           title: "The Dark Knight",
-          image: "/public/18949761.jpg",
+          image: "/18949761.jpg",
           description: "Un film de super-héros avec Batman.",
           rating: 4.9,
           reviews: 200,
           category: "Super-héros",
           trending: true,
         },
-        { id: "4", title: "Avengers: Endgame", image: "/public/0472053.jpg", description: "Un combat épique.", rating: 4.6, reviews: 300, category: "Super-héros", recent: true },
-        { id: "5", title: "Dune", image: "/public/4633954.webp", description: "Une aventure sur une planète désertique.", rating: 4.5, reviews: 250, category: "Action", recent: true },
-        { id: "6", title: "Spider-Man: No Way Home", image: "/public/4860598.webp", description: "Un multivers de Spider-Man.", rating: 4.7, reviews: 400, category: "Super-héros", trending: true },
-        { id: "7", title: "The Hangover", image: "/public/hangover.jpg", description: "Une nuit inoubliable à Vegas.", rating: 4.3, reviews: 120, category: "Comédie", recent: true },
-        { id: "8", title: "Game of Thrones", image: "/public/got.jpg", description: "Une lutte pour le trône de fer.", rating: 4.8, reviews: 500, category: "Action" },
-        { id: "9", title: "Stranger Things", image: "/public/strangerthings.jpg", description: "Des enfants découvrent un monde parallèle.", rating: 4.6, reviews: 350, category: "Action", trending: true },
-        { id: "10", title: "Deadpool", image: "/public/deadpool.jpg", description: "Un anti-héros hilarant.", rating: 4.4, reviews: 220, category: "Comédie", trending: true },
+        { id: "4", title: "Avengers: Endgame", image: "/0472053.jpg", description: "Un combat épique.", rating: 4.6, reviews: 300, category: "Super-héros", recent: true },
+        { id: "5", title: "Dune", image: "/4633954.webp", description: "Une aventure sur une planète désertique.", rating: 4.5, reviews: 250, category: "Action", recent: true },
+        { id: "6", title: "Spider-Man: No Way Home", image: "/4860598.webp", description: "Un multivers de Spider-Man.", rating: 4.7, reviews: 400, category: "Super-héros", trending: true },
+        { id: "7", title: "The Hangover", image: "/hangover.jpg", description: "Une nuit inoubliable à Vegas.", rating: 4.3, reviews: 120, category: "Comédie", recent: true },
+        { id: "8", title: "Game of Thrones", image: "/got.jpg", description: "Une lutte pour le trône de fer.", rating: 4.8, reviews: 500, category: "Action" },
+        { id: "9", title: "Stranger Things", image: "/strangerthings.jpg", description: "Des enfants découvrent un monde parallèle.", rating: 4.6, reviews: 350, category: "Action", trending: true },
+        { id: "10", title: "Deadpool", image: "/deadpool.jpg", description: "Un anti-héros hilarant.", rating: 4.4, reviews: 220, category: "Comédie", trending: true },
       ],
       selectedMovie: null, // Film sélectionné pour afficher les détails
     };
@@ -256,28 +256,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-button {
-  transition: all 0.3s ease;
-}
-
-button:hover {
-  transform: scale(1.05);
-}
-
-img {
-  transition: transform 0.3s ease, opacity 0.3s ease;
-}
-
-.group:hover img {
-  transform: scale(1.1);
-  opacity: 0.9;
-}
-
-ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-</style>

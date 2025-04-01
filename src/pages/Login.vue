@@ -4,15 +4,15 @@
       <h1 class="text-4xl font-extrabold text-center text-red-500 mb-10">Connexion</h1>
       <form @submit.prevent="handleLogin" class="flex flex-col gap-8">
         <div>
-          <label for="email" class="block text-sm font-medium mb-2">Adresse e-mail</label>
+          <label for="username" class="block text-sm font-medium text-gray-300 mb-2">Nom d'utilisateur</label>
           <input
-            v-model="email"
-            type="email"
-            id="email"
-            placeholder="Entrez votre e-mail"
-            class="w-full p-5 border-2 rounded-3xl text-white border-zinc-600 placeholder-white/50 text-white focus:outline-none focus:ring focus:ring-red-500 focus:border-red-500"
+            v-model="username"
+            type="text"
+            id="username"
+            placeholder="Entrez votre nom d'utilisateur"
+            class="w-full p-5 border-2 rounded-3xl text-white border-zinc-600 placeholder-white/50 focus:outline-none focus:ring focus:ring-red-500 focus:border-red-500"
             required
-            />
+          />
         </div>
         <div>
           <label for="password" class="block text-sm font-medium mb-2">Mot de passe</label>
@@ -21,9 +21,9 @@
             type="password"
             id="password"
             placeholder="Entrez votre mot de passe"
-            class="w-full p-5 border-2 rounded-3xl  text-white border-zinc-600 placeholder-white/50 text-white focus:outline-none focus:ring focus:ring-red-500 focus:border-red-500"
+            class="w-full p-5 border-2 rounded-3xl text-white border-zinc-600 placeholder-white/50 focus:outline-none focus:ring focus:ring-red-500 focus:border-red-500"
             required
-            />
+          />
         </div>
         <button
           type="submit"
@@ -33,7 +33,7 @@
         </button>
       </form>
       <p class="text-center mt-6">
-        Pas encore de compte ?
+        Pas encore de compte ? 
         <router-link to="/register" class="text-red-500 hover:underline">Inscrivez-vous</router-link>
       </p>
     </div>
@@ -41,20 +41,41 @@
 </template>
 
 <script>
+import { useUserStore } from '../stores/userStore';
+import axios from "axios";
+
 export default {
   data() {
     return {
-      email: "",
+      username: "",
       password: "",
-      theme: localStorage.getItem("theme") || "dark",
     };
   },
   methods: {
-    handleLogin() {
-      if (this.email && this.password) {
-        alert("Connexion réussie !");
+    async handleLogin() {
+      if (this.username && this.password) {
+        try {
+          // Envoi de la requête POST pour la connexion
+          const response = await axios.post("http://localhost:3000/api/login", {
+            username: this.username,
+            password: this.password,
+          });
+
+          // Si la connexion réussie
+          if (response.data.message === "Connexion réussie") {
+            console.log("Utilisateur connecté:", response.data.user);
+
+            const userStore = useUserStore();
+            userStore.setUser(response.data.user);
+            this.$router.push("/dashboard");
+          } else {
+            console.error('Erreur lors de la connexion:', response.data.error);
+          }
+        } catch (error) {
+          console.error("Erreur serveur ou identifiants incorrects:", error);
+        }
       } else {
-        alert("Veuillez remplir tous les champs.");
+        console.error("Veuillez remplir tous les champs.");
       }
     },
   },

@@ -174,25 +174,23 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   data() {
     return {
       showTrailer: false,
       showInfoModal: false,
-      recommendedMovies: [
-        { id: 1, title: "Inception", image: "/public/téléchargement.jpg", rating: 4.8 },
-        { id: 2, title: "The Dark Knight", image: "/public/images.jpg", rating: 4.9 },
-        { id: 3, title: "Interstellar", image: "/public/18949761.jpg", rating: 4.7 },
-      ],
+      recommendedMovies: [], // Stockage des films recommandés
       animes: [
-        { id: 1, title: "Demon Slayer", image: "/public/demonslayer.webp" },
-        { id: 2, title: "Attack on Titan", image: "/public/snk.webp" },
-        { id: 3, title: "One Piece", image: "/public/op.png" },
+        { id: 1, title: "Demon Slayer", image: "/demonslayer.webp" },
+        { id: 2, title: "Attack on Titan", image: "/snk.webp" },
+        { id: 3, title: "One Piece", image: "/op.png" },
       ],
       cartoons: [
-        { id: 1, title: "Rick and Morty", image: "/public/rm.jpg" },
-        { id: 2, title: "Adventure Time", image: "/public/adt.webp" },
-        { id: 3, title: "The Simpsons", image: "/public/simpsons.jpg" },
+        { id: 1, title: "Rick and Morty", image: "/rm.jpg" },
+        { id: 2, title: "Adventure Time", image: "/adt.webp" },
+        { id: 3, title: "The Simpsons", image: "/simpsons.jpg" },
       ],
     };
   },
@@ -209,39 +207,17 @@ export default {
     closeInfo() {
       this.showInfoModal = false;
     },
+    async fetchRecommendedMovies() {
+      try {
+        const response = await axios.get(`http://localhost:3000/films/category/1`);
+        this.recommendedMovies = response.data;
+      } catch (error) {
+        console.error('Erreur lors de la récupération des films recommandés:', error);
+      }
+    },
+  },
+  mounted() {
+    this.fetchRecommendedMovies();
   },
 };
 </script>
-
-<style scoped>
-/* Modernisation des styles */
-button {
-  transition: all 0.3s ease;
-}
-
-button:hover {
-  transform: scale(1.05);
-}
-
-img {
-  transition: transform 0.3s ease, opacity 0.3s ease;
-}
-
-.group:hover img {
-  transform: scale(1.1);
-  opacity: 0.9;
-}
-
-.animate-fade-in {
-  animation: fadeIn 1s ease-in-out;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-</style>
