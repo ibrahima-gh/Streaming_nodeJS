@@ -3,7 +3,7 @@
     <!-- Section Hero -->
     <div class="relative w-full h-[75vh]">
       <img
-        src="/public/CaptainAmerica.webp"
+        src="/CaptainAmerica.webp"
         alt="Film en vedette"
         class="w-full h-full object-cover brightness-50"
       />

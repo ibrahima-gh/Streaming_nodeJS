@@ -181,7 +181,7 @@ export default {
         {
           id: "1",
           title: "Inception",
-          image: "/public/téléchargement.jpg",
+          image: "/téléchargement.jpg",
           description: "Un film incroyable réalisé par Christopher Nolan.",
           rating: 4.8,
           reviews: 150,
@@ -192,7 +192,7 @@ export default {
         {
           id: "2",
           title: "Interstellar",
-          image: "/public/images.jpg",
+          image: "/images.jpg",
           description: "Un voyage épique dans l'espace.",
           rating: 4.7,
           reviews: 180,
