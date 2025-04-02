@@ -57,6 +57,57 @@
       </div>
     </div>
 
+    <!-- Modals -->
+    <!-- Modal Bande-annonce -->
+    <div
+      v-if="showTrailer"
+      class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50"
+    >
+      <div class="relative w-full max-w-4xl">
+        <iframe
+          width="100%"
+          height="500"
+          src="https://www.youtube.com/embed/hgX152xFTk8"
+          title="Captain America 4 Trailer"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+        ></iframe>
+        <button
+          @click="closeTrailer"
+          class="absolute top-2 right-2 bg-red-600 text-white px-4 py-2 rounded-full hover:bg-red-700 transition"
+        >
+          ✖
+        </button>
+      </div>
+    </div>
+
+    <!-- Modal Plus d'infos -->
+    <div
+      v-if="showInfoModal"
+      class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50"
+    >
+      <div class="bg-gray-800 p-6 rounded-lg shadow-lg w-full max-w-lg relative">
+        <h2 class="text-2xl font-bold mb-4 text-center">Captain America</h2>
+        <p class="text-gray-300 mb-4">
+          Après les événements de "Avengers: Endgame", Sam Wilson (le Faucon) reprend le flambeau de Captain America et doit affronter de nouveaux défis pour protéger le monde.
+        </p>
+        <div class="mb-4">
+          <h3 class="text-lg font-semibold mb-2">Avis des utilisateurs :</h3>
+          <div class="flex items-center space-x-2">
+            <span class="text-yellow-400 text-lg">⭐ 4.5/5</span>
+            <p class="text-gray-400">(120 avis)</p>
+          </div>
+        </div>
+        <button
+          @click="closeInfo"
+          class="absolute top-2 right-2 bg-red-600 text-white px-4 py-2 rounded-full hover:bg-red-700 transition"
+        >
+          ✖
+        </button>
+      </div>
+    </div>
+
     <!-- Section Animés -->
     <div class="mt-8 px-6 bg-gray-700 py-6 rounded-lg">
       <h2 class="text-3xl font-semibold mb-4">🎌 Animés</h2>
@@ -136,6 +187,20 @@ export default {
         { id: 3, title: "The Simpsons", image: "/simpsons.jpg" },
       ],
     };
+  },
+  methods: {
+    openTrailer() {
+      this.showTrailer = true;
+    },
+    closeTrailer() {
+      this.showTrailer = false;
+    },
+    showInfo() {
+      this.showInfoModal = true;
+    },
+    closeInfo() {
+      this.showInfoModal = false;
+    },
   },
 };
 </script>
