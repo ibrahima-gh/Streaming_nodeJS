@@ -7,7 +7,7 @@ const router = express.Router();
 
 // Route de connexion
 router.post('/login', async (req, res) => {
-const { username, email, password } = req.body;
+    const { username, email, password } = req.body;
 
     if ((!username && !email) || !password) {
         return res.status(400).json({ error: 'Nom d\'utilisateur ou e-mail et mot de passe requis.' });
@@ -15,12 +15,12 @@ const { username, email, password } = req.body;
 
     try {
         const result = await query(
-        'SELECT * FROM users WHERE email = $1 OR username = $2',
-        [email || '', username || '']
+            'SELECT * FROM users WHERE email = $1 OR username = $2',
+            [email || '', username || '']
         );
 
         if (result.rows.length === 0) {
-        return res.status(401).json({ error: 'Identifiants incorrects.' });
+            return res.status(401).json({ error: 'Identifiants incorrects.' });
         }
 
         const user = result.rows[0];
@@ -28,7 +28,13 @@ const { username, email, password } = req.body;
         // Vérifier le mot de passe
         const passwordMatch = await bcrypt.compare(password, user.password);
         if (!passwordMatch) {
-        return res.status(401).json({ error: 'Identifiants incorrects.' });
+            return res.status(401).json({ error: 'Identifiants incorrects.' });
+        }
+
+        // ✅ Vérifier si `req.session` est bien défini
+        if (!req.session) {
+            console.error("🔴 ERREUR: req.session est undefined !");
+            return res.status(500).json({ error: "Erreur serveur: session non initialisée" });
         }
 
         // Stocker l'utilisateur dans la session

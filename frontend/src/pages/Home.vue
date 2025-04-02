@@ -206,7 +206,7 @@ export default {
     },
     async fetchRecommendedMovies() {
       try {
-        const response = await axios.get(`http://localhost:3000/films/category/1`);
+        const response = await axios.get(`http://localhost:3000/api/films/recommanded`);
         this.recommendedMovies = response.data;
       } catch (error) {
         console.error('Erreur lors de la récupération des films recommandés:', error);

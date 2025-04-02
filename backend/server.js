@@ -2,7 +2,6 @@ import express from "express";
 import session from "express-session";
 import cors from "cors";
 import authRoutes from "./routes/authRoutes.js";
-import userRoutes from "./routes/userRoutes.js";
 import filmRoutes from "./routes/filmRoutes.js";
 import abonnementRoutes from "./routes/abonnementRoutes.js";
 import categorieRoutes from "./routes/categoriesRoutes.js";
@@ -23,36 +22,21 @@ app.use(
 // Middleware pour lire les JSON
 app.use(express.json());
 
-// Exemple d'utilisation directe de `pool`
-app.get("/api/test-db", async (req, res) => {
-    try {
-        const result = await pool.query("SELECT NOW()");
-        res.status(200).json({
-            message: "Connexion à la base de données réussie",
-            data: result.rows,
-        });
-    } catch (error) {
-        console.error("Erreur avec la base de données : ", error);
-        res.status(500).json({ error: "Erreur au niveau du serveur" });
-    }
-});
+// ✅ **Ajout du middleware de session AVANT les routes**
+app.use(
+    session({
+        secret: "secret",  // 🔒 Change cette valeur en une vraie clé secrète
+        resave: false,
+        saveUninitialized: true,
+        cookie: { secure: false }, // ⚠️ Mettre `secure: true` en production (HTTPS requis)
+    })
+);
 
-// Routes
+// Routes (après session)
 app.use("/api", authRoutes);
-app.use("/api", userRoutes);
 app.use("/api", abonnementRoutes);
 app.use("/api", filmRoutes);
 app.use("/api", categorieRoutes);
-
-// Middleware pour la session
-app.use(
-    session({
-        secret: "secret",
-        resave: false,
-        saveUninitialized: true,
-        cookie: { secure: false },
-    })
-);
 
 // Lancer le serveur
 app.listen(PORT, () => {

@@ -12,6 +12,14 @@ router.get("/films", async (req, res) => {
         res.status(500).json({ error: "Erreur serveur", details: error.message });
     }
 });
+router.get("/films/recommanded", async (req, res) => {
+    try {
+        const result = await pool.query("SELECT * FROM film ORDER BY RANDOM() LIMIT 5;");
+        res.status(200).json(result.rows);
+    } catch (error) {
+        res.status(500).json({ error: "Erreur serveur", details: error.message });
+    }
+});
 
 // Ajouter un film
 router.post("/films", async (req, res) => {
