@@ -4,6 +4,8 @@ import Catalogue from "@/pages/Catalogue.vue";
 import Login from "@/pages/Login.vue";
 import Register from "@/pages/Register.vue";
 import Dashboard from "@/pages/Dashboard.vue";
+import FilmPage from "@/pages/FilmPage.vue";
+import Admin from "@/pages/Admin.vue";
 
 const routes = [
   { path: "/", component: Home },
@@ -11,7 +13,9 @@ const routes = [
   { path: "/login", component: Login },
   { path: "/register", component: Register },
   { path: "/dashboard", component: Dashboard },
-  { path: "/:pathMatch(.*)*", redirect: "/" }, // Redirige vers la page d'accueil si aucune route ne correspond
+  { path: "/film/:id", component: FilmPage, props: true },
+  { path: "/admin", component: Admin },
+  { path: "/:pathMatch(.*)*", redirect: "/" },
 ];
 
 const router = createRouter({
