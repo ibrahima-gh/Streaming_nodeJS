@@ -9,7 +9,10 @@ import { pool } from "./clients/supabase.js"; // Pool pour PostgreSQL
 
 const app = express();
 const PORT = process.env.SERVER_PORT || 3000;
-
+pool.connect()
+    .then(() => console.log("✅ Connexion à PostgreSQL réussie"))
+    .catch(err => console.error("❌ Erreur de connexion à PostgreSQL:", err));
+    
 // Configuration CORS
 app.use(
     cors({

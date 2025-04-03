@@ -12,18 +12,7 @@ const pool = new Pool({
   ssl: process.env.DB_SSL === 'true' ? { rejectUnauthorized: false } : false
 });
 
-async function testConnection() {
-  try {
-    const res = await pool.query('SELECT NOW()');
-    console.log('🟢 Connexion réussie ! Heure du serveur PostgreSQL :', res.rows[0].now);
-  } catch (error) {
-    console.error('🔴 Erreur de connexion :', error.message);
-  }
-}
-
-testConnection();
 
 const query = (text, params) => pool.query(text, params);
 
-// Vérifie que l'export de pool est correct ici
 export { pool, query };

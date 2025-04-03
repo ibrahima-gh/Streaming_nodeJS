@@ -12,6 +12,23 @@ router.get("/films", async (req, res) => {
         res.status(500).json({ error: "Erreur serveur", details: error.message });
     }
 });
+
+router.get("/film/:id", async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const result = await pool.query("SELECT * FROM film WHERE id_film = $1;", [id]);
+
+        if (result.rows.length === 0) {
+            return res.status(404).json({ error: "Film non trouvé" });
+        }
+
+        res.status(200).json(result.rows[0]);
+    } catch (error) {
+        res.status(500).json({ error: "Erreur serveur", details: error.message });
+    }
+});
+
 router.get("/films/recommanded", async (req, res) => {
     try {
         const result = await pool.query("SELECT * FROM film ORDER BY RANDOM() LIMIT 5;");
